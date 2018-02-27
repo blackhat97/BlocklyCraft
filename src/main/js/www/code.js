@@ -445,8 +445,8 @@ Code.initLanguage = function () {
     }
     var comp = function (a, b) {
         // Sort based on first argument ('English', 'Русский', '简体字', etc).
-        if (a[0] > b[0]) return 1;
-        if (a[0] < b[0]) return -1;
+        if (a[0] < b[0]) return 1;
+        if (a[0] > b[0]) return -1;
         return 0;
     };
     languages.sort(comp);
