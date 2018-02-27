@@ -32,10 +32,8 @@ var Code = {};
  * Lookup for names of supported languages.  Keys should be in ISO 639 format.
  */
 Code.LANGUAGE_NAME = {
-    'en': 'English',
-    'fr': 'Français',
-    'it': 'Italiano',
-    'sv': 'Svenska'
+    'ko': '한국어',
+	'en': 'English'
 };
 
 /**
@@ -69,7 +67,7 @@ Code.getLang = function () {
     var lang = Code.getStringParamFromUrl('lang', '');
     if (Code.LANGUAGE_NAME[lang] === undefined) {
         // Default to English.
-        lang = 'en';
+        lang = 'ko';
     }
     return lang;
 };
@@ -352,7 +350,7 @@ Code.init = function () {
         toolbox: toolbox,
         zoom: {
             controls: true,
-            wheel: true
+            wheel: false
         }
     });
 
