@@ -81,6 +81,52 @@ Code.isRtl = function () {
 };
 
 /**
+ * Save blocks to local file.
+ */
+Code.savexml = function() {
+  var xml = Blockly.Xml.workspaceToDom(Code.workspace);
+  var data = Blockly.Xml.domToText(xml);
+  // Store data in blob.
+  var builder = new BlobBuilder();
+  builder.append(data);
+  saveAs(builder.getBlob('text/plain;charset=utf-8'), 'blocktest.xml');
+};
+
+/**
+ * Load blocks from local file.
+ */
+Code.loadxml = function() {
+  var files = event.target.files;
+  // Only allow uploading one file.
+  if (files.length != 1) {
+    return;
+  }
+  // FileReader
+  var reader = new FileReader();
+  reader.onloadend = function(event) {
+    var target = event.target;
+    // 2 == FileReader.DONE
+    if (target.readyState == 2) {
+      try {
+        var xml = Blockly.Xml.textToDom(target.result);
+      } catch (e) {
+        alert('Error parsing XML:\n' + e);
+        return;
+      }
+      var count = Code.workspace.getAllBlocks().length;
+      if (count && alert('The XML file was not successfully parsed into blocks. \n Please review the XML code and try again.', 'Invalid XML')) {
+        Code.workspace.clear();
+      }
+      Blockly.Xml.domToWorkspace(Code.workspace, xml);
+    }
+    // Reset value of input after loading because Chrome will not fire
+    // a 'change' event if the same file is loaded again.
+    document.getElementById('loadxml').value = '';
+  };
+  reader.readAsText(files[0]);
+};
+
+/**
  * Load blocks saved on App Engine Storage or in session/local storage.
  * @param {string} defaultXml Text representation of default blocks.
  */
@@ -110,6 +156,26 @@ Code.loadBlocks = function (defaultXml) {
         window.setTimeout(BlocklyStorage.restoreBlocks, 0);
     }
 };
+
+/**
+ * Backup code blocks to localStorage.
+ */
+Code.backup_blocks = function() {
+  if ('localStorage' in window) {
+    var xml = Blockly.Xml.workspaceToDom(Code.workspace);
+    window.localStorage.setItem('blocks', Blockly.Xml.domToText(xml));
+  }
+}
+
+/**
+ * Restore code blocks from localStorage.
+ */
+Code.restore_blocks = function() {
+  if ('localStorage' in window && window.localStorage.blocks) {
+    var xml = Blockly.Xml.textToDom(window.localStorage.blocks);
+    Blockly.Xml.domToWorkspace(Code.workspace, xml);
+  }
+}
 
 /**
  * Save the blocks and reload with a different language.
@@ -365,7 +431,21 @@ Code.init = function () {
         BlocklyStorage.backupOnUnload(Code.workspace);
     }
 
+       // Restore saved blocks in a separate thread so that subsequent
+    // initialization is not affected from a failed load.
+    window.setTimeout(Code.restore_blocks, 0);
+    // Hook a save function onto unload.
+    Blockly.bindEvent_(window, 'unload', null, Code.backup_blocks);
+
     Code.tabClick(Code.selected);
+
+    // Init load event.
+
+    var loadInput = document.getElementById('loadxml');
+    loadInput.addEventListener('change', Code.loadxml, false);
+    document.getElementById('fakeload').onclick = function() {
+      loadInput.click();
+    };
 
     Code.bindClick('trashButton',
         function () {
@@ -424,7 +504,7 @@ Code.init = function () {
     onresize();
     Blockly.svgResize(Code.workspace);
     // Lazy-load the syntax-highlighting.
-    window.setTimeout(Code.importPrettify, 1);
+//window.setTimeout(Code.importPrettify, 1);
 };
 
 

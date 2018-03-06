@@ -16,6 +16,9 @@
     <script src="customblocks.js"></script>
     <!--Contains the generator for the javascript used in scriptcraft-->
     <script src="customblocks-javascript-generator.js"></script>
+    <!--File load and save-->
+	<script type="text/javascript" src="BlobBuilder.min.js"></script>
+    <script type="text/javascript" src="FileSaver.min.js"></script>
 </head>
 
 <body>
@@ -43,7 +46,12 @@
                         <!-- <td class="tabmin">&nbsp;</td> -->
                         <td id="tab_xml" class="taboff" style="display: none;">XML IS INVISIBLE</td>
                         <td class="tabmax">
-                            <button id="linkButton" class="notext" style="display: none" title="...">
+
+							<button onclick="Code.savexml()">Save XML</button>
+                            <button id="fakeload">Load XML</button>
+                            <input type="file" id="loadxml" style="display: none;"/>
+
+							<button id="linkButton" class="notext" style="display: none" title="...">
                                 <img src='google-blockly/media/1x1.gif' class="link icon21">
                             </button>
                             <button id="deployButton" class="notext primary" title="...">
