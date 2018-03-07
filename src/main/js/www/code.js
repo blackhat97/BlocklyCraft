@@ -80,6 +80,75 @@ Code.isRtl = function () {
     return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
 };
 
+
+/**
+ * Loads an XML file from the server and replaces the current blocks into the
+ * Blockly workspace.
+ * @param {!string} xmlFile Server location of the XML file to load.
+ */
+Code.loadServerXmlFile = function(xmlFile) {
+  var loadXmlfileAccepted = function() {
+    // loadXmlBlockFile loads the file asynchronously and needs a callback
+    var loadXmlCb = function(sucess) {
+      if (sucess) {
+        Code.renderContent();
+      }
+    };
+    Code.loadXmlBlockFile(xmlFile, loadXmlCb);
+  };
+
+  if (Code.isWorkspaceEmpty()) {
+    loadXmlfileAccepted();
+  }
+};
+
+/** @return {!boolean} Indicates if the Blockly workspace has blocks. */
+Code.isWorkspaceEmpty = function() {
+  return Code.workspace.getAllBlocks().length ? false : true;
+};
+
+Code.loadXmlBlockFile = function(xmlFile, cbSuccess) {
+  var request = Code.ajaxRequest();
+  var requestCb = function() {
+    if (request.readyState == 4) {
+      if (request.status == 200) {
+        var success = Code.loadBlocks(request.responseText);
+        cbSuccess(success);
+      }
+    }
+  };
+  request.open('GET', xmlFile, true);
+  request.onreadystatechange = requestCb;
+  request.send(null);
+};
+
+
+/** @return {XMLHttpRequest} An XML HTTP Request multi-browser compatible. */
+Code.ajaxRequest = function() {
+  var request;
+  try {
+    // Firefox, Chrome, IE7+, Opera, Safari
+    request = new XMLHttpRequest();
+  } catch (e) {
+    try {
+      // IE6 and earlier
+      request = new ActiveXObject('Msxml2.XMLHTTP');
+    } catch (e) {
+      try {
+        request = new ActiveXObject('Microsoft.XMLHTTP');
+      } catch (e) {
+        throw 'Your browser does not support AJAX';
+        request = null;
+      }
+    }
+  }
+  return request;
+};
+
+
+/*
+** Open Prompt while saving xml file
+*/
 function filePrompt() {
 
 /*
@@ -507,6 +576,19 @@ Code.init = function () {
     document.getElementById('fakeload').onclick = function() {
       loadInput.click();
     };
+
+
+
+    Code.bindClick('menu_example_house',
+        function () {
+          Code.loadServerXmlFile('example/house.xml');
+	});
+
+    Code.bindClick('menu_example_building',
+        function () {
+          Code.loadServerXmlFile('example/building.xml');
+        });
+
 
     Code.bindClick('trashButton',
         function () {
