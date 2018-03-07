@@ -93,3 +93,50 @@ Blockly.JavaScript['transportation'] = function (block) {
     var code = "theInventory.add(items." + dropdown_item + "(1))" + ";\n";
     return code;
 };
+
+/************************************************************************
+## Blockly -> ScriptCraft Javascript Code generator
+Coalab (2018.03.06)
+
+Contains the generator for the javascript used in scriptcraft
+
+***/
+
+Blockly.JavaScript['onchat'] = function(block) {
+	var text_command = block.getFieldValue('command');
+	var statements_statements = Blockly.JavaScript.statementToCode(block, 'statements');
+	// TODO: Assemble JavaScript into code variable.
+	var code = "command( '" + text_command + "', function ( parameters, player ) {";
+	code = code + statements_statements;
+	code = code + "});";
+  return code;
+};
+
+Blockly.JavaScript['spawn_animal'] = function(block) {
+	var value_animal = Blockly.JavaScript.valueToCode(block, 'animal', Blockly.JavaScript.ORDER_ATOMIC);
+	// TODO: Assemble JavaScript into code variable.
+	var code = "var theDrone = new Drone(player);\ntheDrone.up();\ntheDrone.chkpt('start');\n";
+	code = code + "var timeoutStop = new Date().getTime()+500;\n"; // set maximum run time for a script
+	code = code + "if (__plugin.bukkit) {\n        theDrone.getLocation().world.spawnEntity(theDrone.getLocation(), org.bukkit.entity.EntityType." + value_animal + ");\n    }\n    if (__plugin.canary) {\n        var Canary = Packages.net.canarymod.Canary,\n            entityInstance = Canary.factory().entityFactory.newEntity('" + value_animal + "', theDrone.getLocation());\n        entityInstance.spawn();\n    }";
+  return code;
+};
+
+Blockly.JavaScript['animalmob'] = function(block) {
+  //var dropdown_animal = block.getFieldValue('ANIMAL');
+  // TODO: Assemble JavaScript into code variable.
+  var code = block.getFieldValue('ANIMAL');
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['onmobkilled'] = function(block) {
+  var value_mob = Blockly.JavaScript.valueToCode(block, 'Mob', Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_command = Blockly.JavaScript.statementToCode(block, 'command');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "events.entityDeath( function( event ) {\n"
+			+ "		if( event.getEntity().getType() == '"+value_mob+"' ) {\n" ;
+	code = code + statements_command;
+	code = code + "}});";
+  return code;
+};
+

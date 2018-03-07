@@ -251,3 +251,67 @@ Blockly.Blocks['weapons_armor'] = {
         this.setHelpUrl('http://minecraft.gamepedia.com/Armor');
     }
 };
+
+
+/************************************************************************
+## Blockly-Minecraft blocks
+Coalab (2018.03.06)
+
+Contains the description of the Minecraft blocks for Blockly
+
+***/
+
+Blockly.Blocks['onchat'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("다음 채팅명령어를 입력하면:")
+        .appendField(new Blockly.FieldTextInput("run"), "command");
+    this.appendStatementInput("statements")
+        .setCheck(null);
+    this.setColour(210);
+ this.setTooltip("게임 채팅에 특정 메시지를 입력하면 코드를 실행합니다.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['spawn_animal'] = {
+  init: function() {
+    this.appendValueInput("animal")
+        .setCheck("AnimalMob")
+        .appendField("소환");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+ this.setTooltip("동물을 생성합니다.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['animalmob'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("동물")
+        .appendField(new Blockly.FieldDropdown([["닭","CHICKEN"], ["젖소","COW"], ["돼지","PIG"], ["양","SHEEP"], ["늑대","WOLF"]]), "ANIMAL");
+    this.setOutput(true, "AnimalMob");
+    this.setColour(230);
+ this.setTooltip("게임에서 동물을 나타냅니다.");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['onmobkilled'] = {
+  init: function() {
+    this.appendValueInput("Mob")
+        .setCheck("AnimalMob")
+        .appendField("몹");
+    this.appendDummyInput()
+        .appendField("이 죽었다면 실행");
+    this.appendStatementInput("command")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setColour(230);
+ this.setTooltip("특정 유형의 생명체를 죽이면 코드를 실행합니다.");
+ this.setHelpUrl("");
+  }
+};

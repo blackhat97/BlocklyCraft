@@ -1,6 +1,7 @@
 var MSG = {
     title: "마인크래프트 블록코딩",
     blocks: "블 록",
+    javascript: "자\xa0바\xa0스\xa0크\xa0립\xa0트",
     linkTooltip: "블록 저장 및 링크.",
     deployTooltip: "작업공간에 블록으로 정의된 프로그램 배포.",
     badCode: "프로그램에러:\n%1",
@@ -15,6 +16,7 @@ var MSG = {
     catVariables: "변수",
     catDrone: "드론",
     catInventory: "인벤토리",
+    catCoala: "코알라",
     listVariable: "리스트",
     textVariable: "텍스트",
     httpRequestError: "요청에 문제가 있습니다.",
@@ -144,7 +146,7 @@ Blockly.Msg.OBJNAMES[16] = "석탄광석";
 Blockly.Msg.OBJNAMES[17] = "나무";
 Blockly.Msg.OBJNAMES[18] = "나뭇잎";
 Blockly.Msg.OBJNAMES[19] = "스펀지";
-Blockly.Msg.OBJNAMES[20] = "잔디";
+Blockly.Msg.OBJNAMES[20] = "유리";
 Blockly.Msg.OBJNAMES[21] = "lapis lazuli ore";
 Blockly.Msg.OBJNAMES[22] = "lapis lazuli block";
 Blockly.Msg.OBJNAMES[23] = "dispenser";

@@ -609,12 +609,13 @@ Code.initLanguage = function () {
     document.title += ' ' + MSG.title;
     document.getElementById('title').textContent = MSG.title;
     document.getElementById('tab_blocks').textContent = MSG.blocks;
+    document.getElementById('tab_javascript').textContent = MSG.javascript;
     document.getElementById('linkButton').title = MSG.linkTooltip;
     document.getElementById('deployButton').title = MSG.deployTooltip;
     document.getElementById('trashButton').title = MSG.trashTooltip;
 
     var categories = ['catLogic', 'catLoops', 'catMath', 'catText', 'catLists',
-        'catColour', 'catVariables', 'catDrone', 'catInventory'
+        'catColour', 'catVariables', 'catDrone', 'catInventory', 'catCoala'
     ];
 
     for (var i = 0, cat; cat = categories[i]; i++) {

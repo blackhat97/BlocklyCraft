@@ -37,7 +37,7 @@
                     <tr id="tabRow" height="1em">
                         <td id="tab_blocks" class="tabon">...</td>
                         <td class="tabmin">&nbsp;</td>
-                        <td id="tab_javascript" class="taboff">자&nbsp바&nbsp스&nbsp크&nbsp립&nbsp트</td>
+                        <td id="tab_javascript" class="taboff">...</td>
                         <td class="tabmin">&nbsp;</td>
                         <td id="tab_php" class="taboff" style="display: none;">php IS NOT SUPPORTED</td>
                         <td id="tab_python" class="taboff" style="display: none;">Python IS NOT SUPPORTED</td>
@@ -48,8 +48,8 @@
                         <td class="tabmax">
 
 							<!-- <button onclick="Code.savexml()">Save XML</button> -->
-							<button onclick="filePrompt()">Save XML</button>
-							<button id="fakeload">Load XML</button>
+							<button onclick="filePrompt()">파일저장</button>
+							<button id="fakeload">파일불러오기</button>
                             <input type="file" id="loadxml" style="display: none;"/>
 
 							<button id="linkButton" class="notext" style="display: none" title="...">
@@ -94,6 +94,12 @@
             <block type="food"></block>
             <block type="transportation"></block>
             <block type="weapons_armor"></block>
+        </category>
+		<category id="catCoala">
+            <block type="onchat"></block>
+            <block type="spawn_animal"></block>
+            <block type="animalmob"></block>
+            <block type="onmobkilled"></block>
         </category>
         <sep></sep>
         <category id="catLogic">

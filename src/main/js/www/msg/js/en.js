@@ -1,6 +1,7 @@
 var MSG = {
     title: "BlocklyCraft",
     blocks: "Blocks",
+    javascript: "Javascript",
     linkTooltip: "Save and link to blocks.",
     deployTooltip: "Deploy the program defined by the blocks in the workspace.",
     badCode: "Program error:\n%1",
@@ -15,6 +16,7 @@ var MSG = {
     catVariables: "Variables",
     catDrone: "Drone",
     catInventory: "Inventory",
+    catCoala: "Coala",
     listVariable: "list",
     textVariable: "text",
     httpRequestError: "There was a problem with the request.",
