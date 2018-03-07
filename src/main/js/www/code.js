@@ -80,16 +80,77 @@ Code.isRtl = function () {
     return Code.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
 };
 
+function filePrompt() {
+
+/*
+       var filename = "";
+
+       for(var i =0; i< getNameBlock().block; i++) {
+         filename = filename.concat(getNameBlock().getFieldValue('param'));
+       }
+*/
+    var filename = getNameBlock();
+    if (filename == "") {
+      var filename = "untitled";
+    }
+    var filename = prompt("Please enter file name:", filename);
+    if (filename == null || filename == "") {
+        return;
+    } else {
+        Code.savexml(filename);
+    }
+}
+
+
+/**
+ * Find Block Name
+ */
+
+/* Old Function */
+function getNameBlock() {
+  var blocks = Code.workspace.getTopBlocks(false);
+  for (var i = 0, block; block = blocks[i]; i++) {
+    if (block.type == 'drone' || block.type == 'inventory') {
+      return block;
+    }
+  }
+  return null;
+}
+/* New Function */
+function getNameBlock() {
+  var blocks = Code.workspace.getTopBlocks(false);
+  var namestring = "";
+  for (var i = 0, block; block = blocks[i]; i++) {
+    if (block.type == 'drone' || block.type == 'inventory') {
+      namestring = namestring.concat(block.getFieldValue('param')) + "&";
+    }
+  }
+  namestring = namestring.slice(0, -1);
+  return namestring;
+}
+
+
 /**
  * Save blocks to local file.
  */
-Code.savexml = function() {
+Code.savexml = function(filename) {
   var xml = Blockly.Xml.workspaceToDom(Code.workspace);
   var data = Blockly.Xml.domToText(xml);
   // Store data in blob.
   var builder = new BlobBuilder();
   builder.append(data);
-  saveAs(builder.getBlob('text/plain;charset=utf-8'), 'blocktest.xml');
+
+  saveAs(builder.getBlob('text/plain;charset=utf-8'), filename + '.xml');
+
+/*
+  var nameblock = getNameBlock();
+  try {
+    saveAs(builder.getBlob('text/plain;charset=utf-8'), nameblock.getFieldValue('param') + '.xml');
+  } catch(err) {
+    saveAs(builder.getBlob('text/plain;charset=utf-8'), 'untitle.xml');
+  }
+*/
+
 };
 
 /**
