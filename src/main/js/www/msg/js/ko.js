@@ -1,6 +1,6 @@
 var MSG = {
     title: "마인크래프트 블록코딩",
-    blocks: "블 록",
+    blocks: "블\xa0록",
     javascript: "자\xa0바\xa0스\xa0크\xa0립\xa0트",
     linkTooltip: "블록 저장 및 링크.",
     deployTooltip: "작업공간에 블록으로 정의된 프로그램 배포.",
