@@ -581,12 +581,12 @@ Code.init = function () {
 
     Code.bindClick('menu_example_house',
         function () {
-          Code.loadServerXmlFile('example/house.xml');
+          Code.loadServerXmlFile('example_xml/house.xml');
 	});
 
     Code.bindClick('menu_example_building',
         function () {
-          Code.loadServerXmlFile('example/building.xml');
+          Code.loadServerXmlFile('example_xml/building.xml');
         });
 
 
